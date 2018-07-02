@@ -24,4 +24,14 @@ class Tag extends Model
      * @var array
      */
     protected $dates = ['deleted_at'];
+
+    /**
+     * Publications tagged by this.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function publications()
+    {
+        return $this->belongsToMany(Publication::class)->withTimestamps();
+    }
 }
