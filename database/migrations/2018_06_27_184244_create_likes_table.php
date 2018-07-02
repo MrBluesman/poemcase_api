@@ -17,6 +17,7 @@ class CreateLikesTable extends Migration
             $table->integer('user_id')->unsigned();
             $table->integer('publication_id')->unsigned();
             $table->timestamps();
+            $table->softDeletes();
 
             $table->foreign('user_id')->references('id')->on('users');
             $table->foreign('publication_id')->references('id')->on('publications');

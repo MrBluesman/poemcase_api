@@ -20,6 +20,7 @@ class CreatePublicationsTable extends Migration
             $table->string('description')->nullable();
             $table->boolean('is_comments_allowed')->default(true);
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

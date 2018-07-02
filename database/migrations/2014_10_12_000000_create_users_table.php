@@ -24,6 +24,7 @@ class CreateUsersTable extends Migration
             $table->boolean('is_private')->default(false);
             $table->rememberToken();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
