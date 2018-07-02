@@ -15,12 +15,16 @@ class CreatePublicationsTable extends Migration
     {
         Schema::create('publications', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('title', 30);
             $table->text('content');
+            $table->integer('owner_id')->unsigned();
             $table->boolean('is_private')->default(false);
             $table->string('description')->nullable();
             $table->boolean('is_comments_allowed')->default(true);
             $table->timestamps();
             $table->softDeletes();
+
+            $table->foreign('owner_id')->references('id')->on('users');
         });
     }
 

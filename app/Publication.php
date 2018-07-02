@@ -15,7 +15,7 @@ class Publication extends Model
      * @var array
      */
     protected $fillable = [
-        'content', 'is_private', 'description', 'is_comments_allowed'
+        'title', 'content', 'owner_id', 'is_private', 'description', 'is_comments_allowed'
     ];
 
     /**
@@ -24,4 +24,24 @@ class Publication extends Model
      * @var array
      */
     protected $dates = ['deleted_at'];
+
+    /**
+     * Owner (User) of this publication instance.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function owner()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    /**
+     * Publication tags.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function tags()
+    {
+        return $this->belongsToMany(Tag::class)->withTimestamps();
+    }
 }
