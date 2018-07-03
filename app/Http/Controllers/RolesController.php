@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Tag;
+use App\Role;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
-class TagsController extends Controller
+class RolesController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,12 +15,11 @@ class TagsController extends Controller
      */
     public function index()
     {
-        $tags = Tag::all();
+        $roles = Role::all();
         return response()->json([
-            'data' => $tags
+            'data' => $roles
         ], 200);
     }
-
 
     /**
      * Store a newly created resource in storage.
@@ -31,39 +30,36 @@ class TagsController extends Controller
     public function store(Request $request)
     {
         $validationRules = [
-            'name' => 'required|min:1|max:40|unique:tags,name',
-            'publication_id' => 'required|exists:publications,id'
+            'name' => 'required|min:1|max:20|unique:roles,name'
         ];
 
-        $tagValidator = Validator::make($request->all(), $validationRules);
+        $rolesValidator = Validator::make($request->all(), $validationRules);
 
-        if($tagValidator->fails())
+        if($rolesValidator->fails())
         {
             return response()->json([
                 'error' => 'true',
-                'message' => $tagValidator->messages()
+                'message' => $rolesValidator->messages()
             ], 400);
         }
 
-        $tag = Tag::create($request->all());
-        $tag->publications()->attach($request->get('publication_id'));
-
+        $role = Role::create($request->all());
         return response()->json([
-            'message' => 'Tag created',
-            'data' => $tag
-        ], 201);
+            'message' => 'Role created',
+            'data' => $role
+        ], 400);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  Tag  $tag
+     * @param  Role  $role
      * @return \Illuminate\Http\Response
      */
-    public function show(Tag $tag)
+    public function show(Role $role)
     {
         return response()->json([
-            "data" => $tag
+            'data' => $role
         ], 200);
     }
 
@@ -71,48 +67,45 @@ class TagsController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  Tag  $tag
+     * @param  Role  $role
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Tag $tag)
+    public function update(Request $request, Role $role)
     {
         $validationRules = [
-            'name' => 'required|min:1|max:40|unique:tags,name,' . $tag->id,
-            'publication_id' => 'required|exists:publications,id'
+            'name' => 'required|min:1|max:20|unique:roles,name,' . $role->id
         ];
 
-        $tagValidator = Validator::make($request->all(), $validationRules);
+        $rolesValidator = Validator::make($request->all(), $validationRules);
 
-        if($tagValidator->fails())
+        if($rolesValidator->fails())
         {
             return response()->json([
                 'error' => 'true',
-                'message' => $tagValidator->messages()
+                'message' => $rolesValidator->messages()
             ], 400);
         }
 
-        $tag->update($request->all());
-        $tag->publications()->sync($request->get('publication_id'));
-
+        $role->update($request->all());
         return response()->json([
-            'message' => 'Tag updated',
-            'data' => $tag
+            'message' => 'Role updated',
+            'data' => $role
         ], 200);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  Tag $tag
+     * @param  Role $role
      * @return \Illuminate\Http\Response
      * @throws \Exception
      */
-    public function destroy(Tag $tag)
+    public function destroy(Role $role)
     {
-        $tag->delete();
+        $role->delete();
         return response()->json([
-            'message' => 'Tag deleted',
-            'data' => $tag
+            'message' => 'Role deleted',
+            'data' => $role
         ], 200);
     }
 }

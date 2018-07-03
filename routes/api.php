@@ -20,5 +20,6 @@ use Illuminate\Support\Facades\Route;
 
 Route::resources([
    'publications' => 'PublicationsController',
-    'tags' => 'TagsController'
+    'tags' => 'TagsController',
+    'roles' => 'RolesController'
 ]);
